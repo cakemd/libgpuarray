@@ -391,7 +391,7 @@ cdef api GpuArray pygpu_make_reduce_scattered(GpuComm comm, GpuArray src, int op
         if is_c_cont:
             # Smallest in index dimension has the largest stride
             if src.ga.dimensions[0] % gpucount == 0:
-                chosen_dim_size = src.ga.dimensions[0] / gpucount
+                chosen_dim_size = int(src.ga.dimensions[0]) / gpucount
                 if chosen_dim_size != 1:
                     dims[0] = chosen_dim_size
                     for j in range(1, nd):
@@ -405,7 +405,7 @@ cdef api GpuArray pygpu_make_reduce_scattered(GpuComm comm, GpuArray src, int op
         else:
             # Largest in index dimension has the largest stride
             if src.ga.dimensions[nd - 1] % gpucount == 0:
-                chosen_dim_size = src.ga.dimensions[nd - 1] / gpucount
+                chosen_dim_size = int(src.ga.dimensions[nd - 1]) / gpucount
                 for j in range(nd - 1):
                     dims[j] = src.ga.dimensions[j]
                 if chosen_dim_size != 1:
